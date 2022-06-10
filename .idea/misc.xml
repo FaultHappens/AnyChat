@@ -3,12 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_bttn.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_layout.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_login_registration.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/custom_radio_button.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/ic_email.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/ic_lock.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/radio_button_not_selected.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/radio_button_selected.xml" value="0.3225" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/rounded_custom_edit_text.xml" value="0.3225" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/bg_login_registration.xml" value="0.18" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/chat_item_card_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_chat.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.21" />
       </map>
     </option>
   </component>

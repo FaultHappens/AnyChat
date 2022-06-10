@@ -8,4 +8,12 @@
     <string name="repeat_password">Repeat Password</string>
     <string name="username">Username</string>
     <string name="message">Message</string>
+    <string name="anychat">AnyChat</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="remember_me">Remember me</string>
+    <string name="register">Register</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="register_now">Register now</string>
+    <string name="log_in_now">Log in now</string>
+    <string name="i_agree_to_terms_and_conditions">I Agree to terms and conditions</string>
 </resources>
