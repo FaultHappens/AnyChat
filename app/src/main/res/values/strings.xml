@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AnyChat</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password">Password</string>
+    <string name="email_or_username">Email or Username</string>
+    <string name="email">Email</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="username">Username</string>
+    <string name="message">Message</string>
+</resources>
