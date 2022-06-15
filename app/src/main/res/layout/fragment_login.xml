@@ -34,7 +34,7 @@
 
     <EditText
         android:inputType="textEmailAddress"
-        android:id="@+id/usernameET"
+        android:id="@+id/emailET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
@@ -42,7 +42,7 @@
         android:background="@drawable/rounded_custom_edit_text"
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="10dp"
-        android:hint="@string/email_or_username"
+        android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameET" />
+        app:layout_constraintTop_toBottomOf="@+id/emailET" />
 
     <TextView
         android:id="@+id/forgotPasswordBttn"
