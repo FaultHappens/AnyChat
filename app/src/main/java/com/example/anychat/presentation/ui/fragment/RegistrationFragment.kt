@@ -34,13 +34,7 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val authToken = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
-            ?.getString("access_token", null)
 
-        if (authToken != null) {
-            Log.d("token", authToken)
-            findNavController().navigate(R.id.profileFragment)
-        }
         vm.tokenDTOLiveData.observe(viewLifecycleOwner) {
             val preference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
 

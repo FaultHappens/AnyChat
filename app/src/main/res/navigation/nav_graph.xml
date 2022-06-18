@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileEditFragment"
-        android:name="com.example.anychat.ProfileEditFragment"
+        android:name="com.example.anychat.presentation.ui.fragment.ProfileEditFragment"
         android:label="fragment_profile_edit"
         tools:layout="@layout/fragment_profile_edit" >
         <action

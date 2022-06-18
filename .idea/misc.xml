@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_bttn.xml" value="0.1" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_chat_text.xml" value="0.1" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_chat.xml" value="0.14" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile_edit.xml" value="0.25" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.18" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/left_chat_item_card_view.xml" value="0.12" />
+        <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/right_chat_item_card_view.xml" value="0.22" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.34629629629629627" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

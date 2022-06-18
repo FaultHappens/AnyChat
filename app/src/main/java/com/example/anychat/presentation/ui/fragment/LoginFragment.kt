@@ -2,6 +2,7 @@ package com.example.anychat.presentation.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +34,13 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val authToken = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
-            ?.getString("access_token", null)
+        val tokenPreference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
 
 
+        val rememberMe = tokenPreference?.getBoolean("rememberMe", false)
+        if (rememberMe == true) {
+            findNavController().navigate(R.id.profileFragment)
+        }
 
 
         vm.tokenDTOLiveData.observe(viewLifecycleOwner) {
@@ -63,26 +67,18 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
-            var inputValid: Boolean = true
-            if (binding.emailET.text.toString().length < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailET.text.toString()).matches()) {
-                binding.emailET.error = "Please provide valid email!"
-                inputValid = false
-            }
-
-            if (binding.passwordET.text.toString().length < 3) {
-                binding.passwordET.error = "Please provide valid password!"
-                inputValid = false
-            }
-
-            if (inputValid) {
                 val loginParam = LoginParam(
-                    binding.emailET.text.toString(),
+                    binding.usernameET.text.toString(),
                     binding.passwordET.text.toString(),
                     binding.rememberMeRadioBttn.isChecked
                 )
 
+                context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.putBoolean(
+                    "rememberMe", binding.rememberMeRadioBttn.isChecked
+                )?.apply()
+
                 vm.userLogin(loginParam)
-            }
+
         }
         binding.registerNowBttn.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)

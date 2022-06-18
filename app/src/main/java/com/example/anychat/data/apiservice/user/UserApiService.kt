@@ -2,12 +2,11 @@ package com.example.anychat.data.apiservice.user
 
 
 import com.example.anychat.domain.model.dto.TokenDTO
+import com.example.anychat.domain.model.dto.UserDTO
 import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.domain.model.param.RegistrationParam
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserApiService {
 
@@ -18,4 +17,7 @@ interface UserApiService {
     @Headers( "Content-Type: application/json" )
     @POST("/api/auth/login")
     suspend fun userLogin(@Body loginParam: LoginParam): Response<TokenDTO>
+
+    @GET("/api/user/{username}")
+    suspend fun getUser(@Path(value = "username") username: String): Response<UserDTO>
 }

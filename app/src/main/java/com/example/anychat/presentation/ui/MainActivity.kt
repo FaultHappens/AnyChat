@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startKoin{
-            modules(com.example.anychat.domain.koin.modules)
+            modules(modules)
             androidContext(applicationContext)
         }
 

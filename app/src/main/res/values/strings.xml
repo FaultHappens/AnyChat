@@ -20,6 +20,7 @@
     <string name="no_description">No Description</string>
     <string name="no_information_about_birth_date">No information about birth date</string>
     <string name="save">Save</string>
+    <string name="goChat">Open Chat</string>
     <string name="your_first_name">Your first name</string>
     <string name="your_second_name">Your second name</string>
     <string name="your_birth_date">Your birth date</string>
