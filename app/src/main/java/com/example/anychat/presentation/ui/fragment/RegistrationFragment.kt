@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.anychat.R
 import com.example.anychat.databinding.FragmentLoginBinding
 import com.example.anychat.databinding.FragmentRegistrationBinding
+import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.domain.model.param.RegistrationParam
 import com.example.anychat.presentation.vm.RegistrationFragmentVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,53 +42,69 @@ class RegistrationFragment : Fragment() {
             findNavController().navigate(R.id.profileFragment)
         }
         vm.tokenDTOLiveData.observe(viewLifecycleOwner) {
-            val prefference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
+            val preference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
 
-            prefference?.putString(
+            preference?.putString(
                 "access_token", it.access_token
             )?.apply()
 
-            prefference?.putLong(
+            preference?.putLong(
                 "expires_in", it.expires_in
             )?.apply()
 
-            prefference?.putString(
+            preference?.putString(
                 "refresh_token", it.refresh_token
             )?.apply()
 
-            prefference?.putLong(
+            preference?.putLong(
                 "refresh_token_expires_in", it.refresh_expires_in
             )?.apply()
         }
 
         binding.registerBttn.setOnClickListener {
+            var inputValid: Boolean = true
+            if (binding.emailET.text.toString().length < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailET.text.toString()).matches()) {
+                binding.emailET.error = "Please provide valid email!"
+                inputValid = false
+            }
+
+            if (binding.usernameET.text.toString().length < 3) {
+                binding.usernameET.error = "Please provide valid email!"
+                inputValid = false
+            }
+
+            if (binding.passwordET.text.toString().length < 3) {
+                binding.passwordET.error = "Please provide valid password!"
+                inputValid = false
+            }
+
+            if(binding.passwordRepeatET.text.toString() != binding.passwordET.text.toString()){
+                binding.passwordRepeatET.error = "Passwords do not match!"
+                inputValid = false
+            }
+
+            if (inputValid) {
+                val registrationParam = RegistrationParam(
+                    binding.usernameET.text.toString(),
+                    binding.emailET.text.toString(),
+                    binding.passwordET.text.toString()
+                )
+                vm.userRegistration(registrationParam)
+            }
 
         }
 
         binding.loginNowBttn.setOnClickListener {
             findNavController().navigate(R.id.loginFragment)
         }
-
         binding.passwordRepeatET.addTextChangedListener {
-            if (binding.passwordRepeatET.text == binding.passwordET.text) {
-                //TODO: green
+            if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
+                binding.passwordRepeatET.error = null
             } else {
-                //TODO: red
+                binding.passwordRepeatET.error = "Passwords do not match!"
             }
         }
 
-        binding.registerBttn.setOnClickListener {
-
-
-            val registrationParam = RegistrationParam(
-                binding.usernameET.text.toString(),
-                binding.emailET.text.toString(),
-                binding.passwordET.text.toString()
-
-            )
-            vm.userRegistration(registrationParam)
-
-        }
 
     }
 }

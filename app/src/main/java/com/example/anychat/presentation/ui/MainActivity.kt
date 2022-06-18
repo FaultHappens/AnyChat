@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
             modules(com.example.anychat.domain.koin.modules)
             androidContext(applicationContext)
         }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
         supportActionBar?.hide(); //hide the title bar
         setContentView(R.layout.activity_main)
