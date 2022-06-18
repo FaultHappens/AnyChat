@@ -11,6 +11,7 @@ import com.example.anychat.R
 import com.example.anychat.databinding.FragmentLoginBinding
 import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.presentation.vm.LoginFragmentVM
+import okio.utf8Size
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
@@ -62,14 +63,26 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
+            var inputValid: Boolean = true
+            if (binding.emailET.text.toString().length < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailET.text.toString()).matches()) {
+                binding.emailET.error = "Please provide valid email!"
+                inputValid = false
+            }
 
-            val loginParam = LoginParam(
-                binding.emailET.text.toString(),
-                binding.passwordET.text.toString(),
-                binding.rememberMeRadioBttn.isChecked
-            )
+            if (binding.passwordET.text.toString().length < 3) {
+                binding.passwordET.error = "Please provide valid password!"
+                inputValid = false
+            }
 
-            vm.userLogin(loginParam)
+            if (inputValid) {
+                val loginParam = LoginParam(
+                    binding.emailET.text.toString(),
+                    binding.passwordET.text.toString(),
+                    binding.rememberMeRadioBttn.isChecked
+                )
+
+                vm.userLogin(loginParam)
+            }
         }
         binding.registerNowBttn.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)
