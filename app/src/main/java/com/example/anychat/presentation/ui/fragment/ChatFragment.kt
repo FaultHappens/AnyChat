@@ -34,7 +34,7 @@ class ChatFragment : Fragment() {
 
         val mStompClient = Stomp.over(
             Stomp.ConnectionProvider.OKHTTP,
-            "ws://192.168.191.205:8080/websocket",
+            "ws://192.168.191.58:8080/websocket",
             mapOf("Authorization" to "Bearer $accessToken")
         )
         mStompClient.connect()

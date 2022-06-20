@@ -8,7 +8,6 @@ import com.example.anychat.domain.model.param.RegistrationParam
 import com.example.anychat.domain.repository.UserRepository
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class RegistrationFragmentVM(
     private val userRepository: UserRepository
@@ -31,5 +30,4 @@ class RegistrationFragmentVM(
             }
         }
     }
-
 }
