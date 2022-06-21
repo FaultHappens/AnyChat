@@ -31,4 +31,10 @@ interface UserApiService {
 
     @GET("/api/user/{username}")
     suspend fun getUser(@Path(value = "username") username: String): Response<UserDTO>
+
+    @GET("/api/auth/is-user/{username}")
+    suspend fun isUser(@Path(value = "username") username: String): Response<Boolean>
+
+    @GET("/api/auth/is-email/{email}")
+    suspend fun isEmail(@Path(value = "email") email: String): Response<Boolean>
 }

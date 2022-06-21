@@ -8,9 +8,7 @@ import com.example.anychat.domain.model.param.RegistrationParam
 import com.example.anychat.domain.model.param.ResetPasswordCodeParam
 import com.example.anychat.domain.model.param.ResetPasswordParam
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserRepository {
 
@@ -23,4 +21,8 @@ interface UserRepository {
     suspend fun resetPassword(resetPassword: ResetPasswordParam): Response<Void>
 
     suspend fun getUser(username: String): Response<UserDTO>
+
+    suspend fun isUser(username: String): Response<Boolean>
+
+    suspend fun isEmail(email: String): Response<Boolean>
 }

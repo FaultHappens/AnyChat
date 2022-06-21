@@ -2,17 +2,15 @@ package com.example.anychat.presentation.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.anychat.R
-import com.example.anychat.databinding.FragmentLoginBinding
 import com.example.anychat.databinding.FragmentRegistrationBinding
-import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.domain.model.param.RegistrationParam
 import com.example.anychat.presentation.vm.RegistrationFragmentVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,29 +54,78 @@ class RegistrationFragment : Fragment() {
             findNavController().navigate(R.id.profileFragment)
         }
 
-        binding.registerBttn.setOnClickListener {
-            var inputValid: Boolean = true
-            if (binding.emailET.text.toString().length < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailET.text.toString()).matches()) {
+        val inputsValidMap = mutableMapOf<EditText, Boolean>()
+
+
+        vm.userExistLiveData.observe(viewLifecycleOwner) {
+            if(it){
+                binding.usernameET.error = "Username already exist"
+                inputsValidMap[binding.usernameET] = false
+            }
+        }
+        vm.emailExistLiveData.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.emailET.error = "Email already exist"
+                inputsValidMap[binding.emailET] = false
+            }
+        }
+
+
+        binding.emailET.addTextChangedListener {
+
+            if (binding.emailET.text.length < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailET.text.toString()).matches()) {
                 binding.emailET.error = "Please provide valid email!"
-                inputValid = false
+               inputsValidMap[binding.emailET] = false
             }
 
+            else{
+                binding.passwordRepeatET.error = null
+                vm.emailExist(binding.emailET.text.toString())
+                inputsValidMap[binding.emailET] = true
+            }
+        }
+        binding.usernameET.addTextChangedListener {
             if (binding.usernameET.text.toString().length < 3) {
-                binding.usernameET.error = "Please provide valid email!"
-                inputValid = false
+                binding.usernameET.error = "Please provide valid username!"
+                inputsValidMap[binding.usernameET] = false
             }
-
-            if (binding.passwordET.text.toString().length < 3) {
-                binding.passwordET.error = "Please provide valid password!"
-                inputValid = false
+            else{
+                binding.passwordRepeatET.error = null
+                vm.userExist(binding.usernameET.text.toString())
+                inputsValidMap[binding.usernameET] = true
             }
-
-            if(binding.passwordRepeatET.text.toString() != binding.passwordET.text.toString()){
+        }
+        binding.passwordET.addTextChangedListener {
+            if (binding.passwordET.text.toString().length < 8) {
+                binding.passwordET.error = "password too short!"
+                inputsValidMap[binding.passwordET] = false
+            }
+            else if (binding.passwordET.text.toString().length > 20) {
+                binding.passwordET.error = "password too long!"
+                inputsValidMap[binding.passwordET] = false
+            }
+            else{
+                binding.passwordRepeatET.error = null
+                inputsValidMap[binding.passwordET] = true
+            }
+        }
+        binding.passwordRepeatET.addTextChangedListener {
+            if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
+                binding.passwordRepeatET.error = null
+                inputsValidMap[binding.passwordRepeatET] = false
+            } else {
                 binding.passwordRepeatET.error = "Passwords do not match!"
-                inputValid = false
+                inputsValidMap[binding.passwordRepeatET] = true
             }
+        }
 
-            if (inputValid) {
+
+
+
+        binding.registerBttn.setOnClickListener {
+            if (inputsValidMap.values.all { it }
+                && inputsValidMap.keys.all { it.text.toString().isNotBlank() }
+            ) {
                 val registrationParam = RegistrationParam(
                     binding.usernameET.text.toString(),
                     binding.emailET.text.toString(),
@@ -86,19 +133,12 @@ class RegistrationFragment : Fragment() {
                 )
                 vm.userRegistration(registrationParam)
             }
-
         }
 
         binding.loginNowBttn.setOnClickListener {
             findNavController().navigate(R.id.loginFragment)
         }
-        binding.passwordRepeatET.addTextChangedListener {
-            if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
-                binding.passwordRepeatET.error = null
-            } else {
-                binding.passwordRepeatET.error = "Passwords do not match!"
-            }
-        }
+
 
 
     }

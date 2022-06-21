@@ -15,6 +15,12 @@ class RegistrationFragmentVM(
     val tokenDTOLiveData: MutableLiveData<TokenDTO> by lazy {
         MutableLiveData<TokenDTO>()
     }
+   val userExistLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val emailExistLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
     fun userRegistration(registrationParam: RegistrationParam) {
         viewModelScope.launch {
@@ -23,10 +29,24 @@ class RegistrationFragmentVM(
 
             if (userRegistration.isSuccessful)
                 tokenDTOLiveData.value = tokenDTO
-            else {
-                val errorMap =
-                    Gson().fromJson(userRegistration.errorBody()?.charStream(), Map::class.java)
-                println(errorMap)
+
+        }
+    }
+    fun userExist(username: String){
+        viewModelScope.launch {
+            val userExist = userRepository.isUser(username)
+            val userExistBoolean = userExist.body()
+            userExistBoolean?.let {
+                userExistLiveData.value = it
+            }
+        }
+    }
+    fun emailExist(email: String){
+        viewModelScope.launch {
+            val emailExist = userRepository.isEmail(email)
+            val emailExistBoolean = emailExist.body()
+            emailExistBoolean?.let {
+                emailExistLiveData.value = it
             }
         }
     }

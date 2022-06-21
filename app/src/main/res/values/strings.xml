@@ -27,4 +27,7 @@
     <string name="your_second_name">Your second name</string>
     <string name="your_birth_date">Your birth date</string>
     <string name="about_you">About You</string>
+    <string name="allowed_username">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
+    <string name="allowed_email">ABCDEFGHIJKLMNOPQRSTUVWXYZ@.-abcdefghijklmnopqrstuvwxyz1234567890</string>
+    <string name="allowed_password">ABCDEFGHIJKLMNOPQRSTUVWXYZ@.-#$%abcdefghijklmnopqrstuvwxyz1234567890</string>
 </resources>

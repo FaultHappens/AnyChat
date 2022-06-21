@@ -25,6 +25,14 @@ class UserRepositoryImpl(
         return userApiService.getUser(username)
     }
 
+    override suspend fun isUser(username: String): Response<Boolean> {
+      return  userApiService.isUser(username)
+    }
+
+    override suspend fun isEmail(email: String): Response<Boolean> {
+      return userApiService.isEmail(email)
+    }
+
     override suspend fun resetPasswordCode(resetPasswordCodeParam: ResetPasswordCodeParam): Response<Void> {
         return userApiService.resetPasswordCode(resetPasswordCodeParam)
     }
