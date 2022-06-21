@@ -53,6 +53,7 @@ class RegistrationFragment : Fragment() {
             preference?.putLong(
                 "refresh_token_expires_in", it.refresh_expires_in
             )?.apply()
+            findNavController().navigate(R.id.profileFragment)
         }
 
         binding.registerBttn.setOnClickListener {

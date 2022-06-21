@@ -5,6 +5,8 @@ import com.example.anychat.domain.model.dto.TokenDTO
 import com.example.anychat.domain.model.dto.UserDTO
 import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.domain.model.param.RegistrationParam
+import com.example.anychat.domain.model.param.ResetPasswordCodeParam
+import com.example.anychat.domain.model.param.ResetPasswordParam
 import com.example.anychat.domain.repository.UserRepository
 import retrofit2.Response
 
@@ -23,5 +25,11 @@ class UserRepositoryImpl(
         return userApiService.getUser(username)
     }
 
+    override suspend fun resetPasswordCode(resetPasswordCodeParam: ResetPasswordCodeParam): Response<Void> {
+        return userApiService.resetPasswordCode(resetPasswordCodeParam)
+    }
 
+    override suspend fun resetPassword(resetPassword: ResetPasswordParam): Response<Void> {
+        return userApiService.resetPassword(resetPassword)
+    }
 }

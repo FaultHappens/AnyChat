@@ -53,7 +53,10 @@ class ProfileFragment : Fragment() {
         binding.chatBtn.setOnClickListener {
             findNavController().navigate(R.id.chatFragment)
         }
-
+        binding.logoutBtn.setOnClickListener {
+            context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.clear()?.apply()
+            findNavController().navigate(R.id.loginFragment)
+        }
 
 
         vm.getUser(username)

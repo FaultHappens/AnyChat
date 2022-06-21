@@ -66,6 +66,11 @@ class LoginFragment : Fragment() {
 
         }
 
+        binding.forgetPasswordBtn.setOnClickListener {
+
+            findNavController().navigate(R.id.passwordResetFragment)
+        }
+
         binding.loginButton.setOnClickListener {
                 val loginParam = LoginParam(
                     binding.usernameET.text.toString(),
@@ -83,9 +88,7 @@ class LoginFragment : Fragment() {
         binding.registerNowBttn.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)
         }
-        binding.forgotPasswordBttn.setOnClickListener {
 
-        }
 
 
     }

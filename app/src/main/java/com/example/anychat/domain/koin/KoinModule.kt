@@ -8,7 +8,7 @@ import com.example.anychat.domain.repository.UserRepository
 import com.example.anychat.presentation.vm.LoginFragmentVM
 import com.example.anychat.presentation.vm.ProfileFragmentVM
 import com.example.anychat.presentation.vm.RegistrationFragmentVM
-import okhttp3.Authenticator
+import com.example.anychat.presentation.vm.PasswordResetFragmentVM
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -26,6 +26,7 @@ val modules = module{
     viewModel { RegistrationFragmentVM(get()) }
     viewModel { LoginFragmentVM(get())}
     viewModel { ProfileFragmentVM(get()) }
+    viewModel { PasswordResetFragmentVM(get()) }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
