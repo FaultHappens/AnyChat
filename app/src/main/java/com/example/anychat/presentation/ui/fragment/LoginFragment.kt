@@ -63,7 +63,10 @@ class LoginFragment : Fragment() {
             )?.apply()
 
             findNavController().navigate(R.id.profileFragment)
-
+        }
+        vm.wrongCredentialLiveData.observe(viewLifecycleOwner){
+            binding.usernameET.error = "Wrong username or password"
+            binding.passwordET.error = "Wrong username or password"
         }
 
         binding.forgetPasswordBtn.setOnClickListener {
@@ -75,11 +78,11 @@ class LoginFragment : Fragment() {
                 val loginParam = LoginParam(
                     binding.usernameET.text.toString(),
                     binding.passwordET.text.toString(),
-                    binding.rememberMeRadioBttn.isChecked
+                    binding.rememberMeCheckBttn.isChecked
                 )
 
                 context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.putBoolean(
-                    "rememberMe", binding.rememberMeRadioBttn.isChecked
+                    "rememberMe", binding.rememberMeCheckBttn.isChecked
                 )?.apply()
 
                 vm.userLogin(loginParam)

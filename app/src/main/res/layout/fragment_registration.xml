@@ -107,8 +107,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <RadioButton
-            android:id="@+id/agreeRadioBttn"
+        <CheckBox
+            android:id="@+id/agreeCheckBttn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="10dp"

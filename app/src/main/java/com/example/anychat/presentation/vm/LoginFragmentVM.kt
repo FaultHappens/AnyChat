@@ -17,6 +17,9 @@ class LoginFragmentVM(
     val tokenDTOLiveData: MutableLiveData<TokenDTO> by lazy {
         MutableLiveData<TokenDTO>()
     }
+    val wrongCredentialLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
     fun userLogin(userLoginParam: LoginParam) {
         viewModelScope.launch {
@@ -26,9 +29,7 @@ class LoginFragmentVM(
             if (userRegistration.isSuccessful)
                 tokenDTOLiveData.value = tokenDTO
             else {
-                val errorMap =
-                    Gson().fromJson(userRegistration.errorBody()?.charStream(), Map::class.java)
-                println(errorMap)
+                wrongCredentialLiveData.value = true
             }
         }
     }

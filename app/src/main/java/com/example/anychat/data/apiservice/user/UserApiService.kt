@@ -14,27 +14,27 @@ import retrofit2.http.*
 interface UserApiService {
 
     @Headers( "Content-Type: application/json" )
-    @POST("/api/auth/register")
+    @POST("api/auth/register")
     suspend fun userRegistration(@Body registrationParam: RegistrationParam): Response<TokenDTO>
 
     @Headers( "Content-Type: application/json" )
-    @POST("/api/auth/login")
+    @POST("api/auth/login")
     suspend fun userLogin(@Body loginParam: LoginParam): Response<TokenDTO>
 
     @Headers( "Content-Type: application/json" )
-    @POST("/api/auth/reset-password-code")
+    @POST("api/auth/reset-password-code")
     suspend fun resetPasswordCode(@Body resetPasswordCodeParam: ResetPasswordCodeParam): Response<Void>
 
     @Headers( "Content-Type: application/json" )
-    @POST("/api/auth/reset-password")
+    @POST("api/auth/reset-password")
     suspend fun resetPassword(@Body resetPassword: ResetPasswordParam): Response<Void>
 
-    @GET("/api/user/{username}")
+    @GET("api/user/{username}")
     suspend fun getUser(@Path(value = "username") username: String): Response<UserDTO>
 
-    @GET("/api/auth/is-user/{username}")
+    @GET("api/auth/is-user/{username}")
     suspend fun isUser(@Path(value = "username") username: String): Response<Boolean>
 
-    @GET("/api/auth/is-email/{email}")
+    @GET("api/auth/is-email/{email}")
     suspend fun isEmail(@Path(value = "email") email: String): Response<Boolean>
 }

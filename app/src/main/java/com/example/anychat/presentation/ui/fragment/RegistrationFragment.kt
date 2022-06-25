@@ -108,14 +108,24 @@ class RegistrationFragment : Fragment() {
                 binding.passwordRepeatET.error = null
                 inputsValidMap[binding.passwordET] = true
             }
+
+            if(binding.passwordRepeatET.text.isNotEmpty()) {
+                if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
+                    binding.passwordRepeatET.error = null
+                    inputsValidMap[binding.passwordRepeatET] = true
+                } else {
+                    binding.passwordRepeatET.error = "Passwords do not match!"
+                    inputsValidMap[binding.passwordRepeatET] = false
+                }
+            }
         }
         binding.passwordRepeatET.addTextChangedListener {
             if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
                 binding.passwordRepeatET.error = null
-                inputsValidMap[binding.passwordRepeatET] = false
+                inputsValidMap[binding.passwordRepeatET] = true
             } else {
                 binding.passwordRepeatET.error = "Passwords do not match!"
-                inputsValidMap[binding.passwordRepeatET] = true
+                inputsValidMap[binding.passwordRepeatET] = false
             }
         }
 

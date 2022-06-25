@@ -15,6 +15,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Boolean.FALSE
 import java.util.concurrent.TimeUnit
 
 val modules = module{
@@ -48,5 +49,8 @@ fun provideOkHttpClient(androidContext: Context): OkHttpClient {
             }
 
             responseBuilder.build()
-        }.build()
+        }
+        .followRedirects(FALSE)
+        .followSslRedirects(FALSE)
+        .build()
 }
