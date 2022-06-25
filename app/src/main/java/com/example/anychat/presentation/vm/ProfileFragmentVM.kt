@@ -3,16 +3,11 @@ package com.example.anychat.presentation.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
-import com.example.anychat.R
-import com.example.anychat.domain.model.dto.TokenDTO
 import com.example.anychat.domain.model.dto.UserDTO
-import com.example.anychat.domain.model.param.LoginParam
-import com.example.anychat.domain.model.param.RegistrationParam
+import com.example.anychat.domain.repository.AuthRepository
 import com.example.anychat.domain.repository.UserRepository
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class ProfileFragmentVM(
     private val userRepository: UserRepository

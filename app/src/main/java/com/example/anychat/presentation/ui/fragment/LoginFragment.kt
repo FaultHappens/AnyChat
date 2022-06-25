@@ -2,7 +2,6 @@ package com.example.anychat.presentation.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,9 @@ import com.example.anychat.R
 import com.example.anychat.databinding.FragmentLoginBinding
 import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.presentation.vm.LoginFragmentVM
-import okio.utf8Size
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalDateTime
+import java.util.*
 
 class LoginFragment : Fragment() {
 
@@ -51,15 +51,11 @@ class LoginFragment : Fragment() {
             )?.apply()
 
             prefference?.putLong(
-                "expires_in", it.expires_in
+                "expires_in",  LocalDateTime.now().second + it.expires_in
             )?.apply()
 
             prefference?.putString(
                 "refresh_token", it.refresh_token
-            )?.apply()
-
-            prefference?.putLong(
-                "refresh_token_expires_in", it.refresh_expires_in
             )?.apply()
 
             findNavController().navigate(R.id.profileFragment)
@@ -91,8 +87,6 @@ class LoginFragment : Fragment() {
         binding.registerNowBttn.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)
         }
-
-
-
     }
 }
+

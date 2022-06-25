@@ -5,12 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anychat.domain.model.dto.TokenDTO
 import com.example.anychat.domain.model.param.RegistrationParam
-import com.example.anychat.domain.repository.UserRepository
-import com.google.gson.Gson
+import com.example.anychat.domain.repository.AuthRepository
 import kotlinx.coroutines.launch
 
 class RegistrationFragmentVM(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     val tokenDTOLiveData: MutableLiveData<TokenDTO> by lazy {
         MutableLiveData<TokenDTO>()
@@ -24,7 +23,7 @@ class RegistrationFragmentVM(
 
     fun userRegistration(registrationParam: RegistrationParam) {
         viewModelScope.launch {
-            val userRegistration = userRepository.userRegistration(registrationParam)
+            val userRegistration = authRepository.userRegistration(registrationParam)
             val tokenDTO = userRegistration.body()
 
             if (userRegistration.isSuccessful)
@@ -34,7 +33,7 @@ class RegistrationFragmentVM(
     }
     fun userExist(username: String){
         viewModelScope.launch {
-            val userExist = userRepository.isUser(username)
+            val userExist = authRepository.isUser(username)
             val userExistBoolean = userExist.body()
             userExistBoolean?.let {
                 userExistLiveData.value = it
@@ -43,7 +42,7 @@ class RegistrationFragmentVM(
     }
     fun emailExist(email: String){
         viewModelScope.launch {
-            val emailExist = userRepository.isEmail(email)
+            val emailExist = authRepository.isEmail(email)
             val emailExistBoolean = emailExist.body()
             emailExistBoolean?.let {
                 emailExistLiveData.value = it

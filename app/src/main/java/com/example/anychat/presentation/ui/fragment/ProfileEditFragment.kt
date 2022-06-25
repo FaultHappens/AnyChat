@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.anychat.databinding.FragmentProfileEditBinding
+import com.example.anychat.domain.model.param.UserUpdateParam
 
 
 class ProfileEditFragment : Fragment() {
@@ -29,21 +30,12 @@ class ProfileEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveBtn.setOnClickListener {
-            //TODO add user description update
-        }
-        binding.userImageIV.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    // There are no request codes
-                    val data = result.data
-                }
-            }
-            resultLauncher.launch(intent)
+            val userUpdateParam = UserUpdateParam(
+                binding.firstnameET.text.toString(),
+                binding.lastnameET.text.toString(),
+                binding.descriptionET.text.toString()
+            )
+
         }
     }
 }
