@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.auth0.android.jwt.JWT
 import com.example.anychat.R
 import com.example.anychat.databinding.FragmentLoginBinding
 import com.example.anychat.domain.model.param.LoginParam
@@ -45,6 +46,13 @@ class LoginFragment : Fragment() {
 
         vm.tokenDTOLiveData.observe(viewLifecycleOwner) {
             val prefference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
+
+
+            val username = JWT(it.access_token).claims["given_name"]?.asString()!!
+
+            prefference?.putString(
+                "username", username
+            )?.apply()
 
             prefference?.putString(
                 "access_token", it.access_token
