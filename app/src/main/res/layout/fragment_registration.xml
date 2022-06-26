@@ -34,6 +34,8 @@
 
 
     <EditText
+        android:digits="@string/allowed_username"
+        android:inputType="textFilter"
         android:id="@+id/usernameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,12 +45,12 @@
         android:drawableStart="@drawable/ic_username"
         android:drawablePadding="10dp"
         android:hint="@string/username"
-        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:digits="@string/allowed_email"
         android:id="@+id/emailET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,6 +67,7 @@
 
 
     <EditText
+        android:digits="@string/allowed_password"
         android:id="@+id/passwordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailET" />
 
     <EditText
+        android:digits="@string/allowed_password"
         android:id="@+id/passwordRepeatET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +98,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordET" />
 
+    <TextView
+        android:id="@+id/mustAgreeTermsTV"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/must_agree_terms"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRepeatET"
+        app:layout_constraintVertical_bias="1.0" />
+
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -103,8 +125,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <RadioButton
-            android:id="@+id/agreeRadioBttn"
+        <CheckBox
+            android:id="@+id/agreeCheckBttn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="10dp"

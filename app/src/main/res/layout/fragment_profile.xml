@@ -49,6 +49,17 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userImageIV" />
+    <TextView
+        android:id="@+id/fullnameET"
+        android:text="No name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
     <TextView
         android:id="@+id/descriptionET"
@@ -60,7 +71,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameET" />
+        app:layout_constraintTop_toBottomOf="@+id/fullnameET" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -103,7 +114,7 @@
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:background="@drawable/bg_bttn"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -114,6 +125,28 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/goChat"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="501dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_bttn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Logout"
             android:textColor="@color/white"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="5dp"

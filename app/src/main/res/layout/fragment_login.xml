@@ -34,6 +34,7 @@
 
 
     <EditText
+        android:digits="@string/allowed_username"
         android:id="@+id/usernameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,6 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:digits="@string/allowed_password"
         android:id="@+id/passwordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,14 +66,14 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameET" />
 
     <TextView
-        android:id="@+id/forgotPasswordBttn"
+        android:id="@+id/forgetPasswordBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginTop="5dp"
         android:text="Forgot your password?"
         android:textColor="@color/dark_blue"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordET" />
@@ -85,11 +87,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <RadioButton
-            android:id="@+id/rememberMeRadioBttn"
+
+
+
+        <CheckBox
+            android:id="@+id/rememberMeCheckBttn"
             android:background="@drawable/custom_radio_button"
             android:button="@null"
-
             android:layout_width="20dp"
             android:layout_marginEnd="10dp"
             android:layout_height="20dp" />

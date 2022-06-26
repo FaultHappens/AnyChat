@@ -15,6 +15,7 @@ import com.example.anychat.databinding.FragmentRegistrationBinding
 import com.example.anychat.presentation.vm.ProfileFragmentVM
 import com.example.anychat.presentation.vm.RegistrationFragmentVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.StringBuilder
 
 
 class ProfileFragment : Fragment() {
@@ -36,16 +37,23 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         vm.userDTOLiveData.observe(viewLifecycleOwner) {
             binding.nameET.text = it.username
+            val strBuilder = StringBuilder()
+            if(it.firstname != null) {
+                strBuilder.append(it.firstname)
+                strBuilder.append(" ")
+            }
+            if(it.lastname != null){
+                strBuilder.append(it.lastname)
+            }
+            if(strBuilder.isNotEmpty()){
+                binding.fullnameET.text = strBuilder.toString()
+            }
+
             binding.descriptionET.text = it.about ?: "No Description"
 
         }
-        val tokenPreference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
-        val authToken = tokenPreference?.getString("access_token", null)
-        if(authToken == null){
-            findNavController().navigate(R.id.loginFragment)
-            return
-        }
-        val username = JWT(authToken).claims["given_name"]?.asString()!!
+        val username = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.getString("username", null)
+
 
         binding.editBttn.setOnClickListener {
             findNavController().navigate(R.id.profileEditFragment)
@@ -53,10 +61,15 @@ class ProfileFragment : Fragment() {
         binding.chatBtn.setOnClickListener {
             findNavController().navigate(R.id.chatFragment)
         }
+        binding.logoutBtn.setOnClickListener {
+            context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.clear()?.apply()
+            findNavController().navigate(R.id.loginFragment)
+        }
 
-
-
-        vm.getUser(username)
+        if(username == null)
+            findNavController().navigate(R.id.loginFragment)
+        else
+           vm.getUser(username)
 
     }
 }
