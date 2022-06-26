@@ -2,13 +2,15 @@ package com.example.anychat.domain.koin
 
 
 import android.content.Context
+import com.example.anychat.data.apiservice.user.AuthApiService
+import com.example.anychat.data.apiservice.user.ChatApiService
 import com.example.anychat.data.apiservice.user.UserApiService
+import com.example.anychat.data.repository.AuthRepositoryImpl
 import com.example.anychat.data.repository.UserRepositoryImpl
+import com.example.anychat.domain.repository.AuthRepository
+import com.example.anychat.domain.repository.ChatRepository
 import com.example.anychat.domain.repository.UserRepository
-import com.example.anychat.presentation.vm.LoginFragmentVM
-import com.example.anychat.presentation.vm.ProfileFragmentVM
-import com.example.anychat.presentation.vm.RegistrationFragmentVM
-import okhttp3.Authenticator
+import com.example.anychat.presentation.vm.*
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,11 +23,20 @@ val modules = module{
     single { provideOkHttpClient(androidContext()) }
     single { provideRetrofit(get()) }
 
+    single {get<Retrofit>().create(AuthApiService::class.java)}
+    single<AuthRepository> { AuthRepositoryImpl(get()) }
+
     single {get<Retrofit>().create(UserApiService::class.java)}
     single<UserRepository> { UserRepositoryImpl(get()) }
+
+    single {get<Retrofit>().create(ChatApiService::class.java)}
+    single { ChatRepository(get()) }
     viewModel { RegistrationFragmentVM(get()) }
     viewModel { LoginFragmentVM(get())}
     viewModel { ProfileFragmentVM(get()) }
+    viewModel { PasswordResetFragmentVM(get()) }
+    viewModel { ProfileEditFragmentVM(get())}
+    viewModel { ChatFragmentVM(get())}
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {

@@ -2,6 +2,7 @@ package com.example.anychat.presentation.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,6 @@ class LoginFragment : Fragment() {
 
             Log.d("TOKEN", it.access_token)
             val prefference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
-
 
             val username = JWT(it.access_token).claims["given_name"]?.asString()!!
 

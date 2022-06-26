@@ -1,37 +1,93 @@
 package com.example.anychat.presentation.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anychat.R
-import com.example.anychat.databinding.LeftChatItemCardViewBinding
+import com.example.anychat.data.enums.Enums
 import com.example.anychat.domain.model.dto.MessageDTO
 
-class ChatPagingAdapter: PagingDataAdapter<MessageDTO, ChatPagingAdapter.ViewHolder>(COMPARATOR) {
-    class ViewHolder(private val binding: LeftChatItemCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MessageDTO?) {
-            binding.userNameTV.text = item?.username ?: "Error"
-            binding.messageTextTV.text = item?.text ?: "Error getting message"
-        }
-        companion object {
-            fun create(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.left_chat_item_card_view, parent, false)
-                val binding = LeftChatItemCardViewBinding.bind(view)
-                return ViewHolder(binding)
-            }
+
+class ChatPagingAdapter(
+    private val mUserName: String
+) : PagingDataAdapter<MessageDTO, RecyclerView.ViewHolder>(COMPARATOR) {
+
+
+    internal class YourMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var userNameTV: TextView
+        var messageTextTV: TextView
+        var messageTimeStampTV: TextView
+        var userImageIV: ImageView
+
+
+        init {
+            userNameTV = itemView.findViewById(R.id.userNameTV)
+            messageTextTV = itemView.findViewById(R.id.messageTextTV)
+            userImageIV = itemView.findViewById(R.id.userImageIV)
+            messageTimeStampTV = itemView.findViewById(R.id.messageTimeStampTV)
         }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    internal class MyMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var userNameTV: TextView
+        var messageTextTV: TextView
+        var messageTimeStampTV: TextView
+        var userImageIV: ImageView
+
+
+        init {
+            userNameTV = itemView.findViewById(R.id.userNameTV)
+            messageTextTV = itemView.findViewById(R.id.messageTextTV)
+            userImageIV = itemView.findViewById(R.id.userImageIV)
+            messageTimeStampTV = itemView.findViewById(R.id.messageTimeStampTV)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.create(parent)
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position)?.username == mUserName) {
+            Enums.ViewType.MyMessage.ordinal
+        } else {
+            Enums.ViewType.YourMessage.ordinal
+        }
+
     }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder.itemViewType != Enums.ViewType.MyMessage.ordinal){
+            initYourMessage(holder as YourMessageViewHolder, position)
+        }else{
+            initMyMessage(holder as MyMessageViewHolder, position)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return if(viewType == Enums.ViewType.MyMessage.ordinal){
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.right_chat_item_card_view, parent ,false)
+            MyMessageViewHolder(view)
+        }else{
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.left_chat_item_card_view, parent ,false)
+            YourMessageViewHolder(view)
+        }
+    }
+
+    private fun initMyMessage(holder: MyMessageViewHolder, pos: Int) {
+        val message: MessageDTO? = getItem(pos)
+        holder.messageTextTV.text = message?.text
+        holder.userNameTV.text = message?.username
+    }
+
+    private fun initYourMessage(holder: YourMessageViewHolder, pos: Int) {
+        val message: MessageDTO? = getItem(pos)
+        holder.messageTextTV.text = message?.text
+        holder.userNameTV.text = message?.username
+    }
+
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<MessageDTO>() {
             override fun areItemsTheSame(oldItem: MessageDTO, newItem: MessageDTO): Boolean =

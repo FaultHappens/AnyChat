@@ -8,7 +8,7 @@ import com.example.anychat.domain.model.param.*
 import retrofit2.Response
 import retrofit2.http.*
 
-interface UserApiServer {
+interface UserApiService {
 
 
     @GET("user/{username}")

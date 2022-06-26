@@ -39,13 +39,14 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chatAdapter = ChatPagingAdapter()
+
+        chatAdapter = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
+            ?.getString("username", "error")?.let { ChatPagingAdapter(it) }!!
 
         binding.messagesRV.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
             adapter = chatAdapter
         }
-
 
 
         val accessToken = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -56,7 +57,6 @@ class ChatFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             vm.getChatMessages().collectLatest { pagingData ->
                 chatAdapter.submitData(pagingData)
-                Log.d("PAGINGDATA", "pagingData.toString()")
             }
         }
 
@@ -67,9 +67,11 @@ class ChatFragment : Fragment() {
         )
         mStompClient.connect()
         mStompClient.topic("/topic/1/messages").subscribe{
-            //TODO HANDLE MESSAGE
-            val messageDTO = Gson().fromJson(it.payload, MessageDTO::class.java)
-            Log.d("socket", messageDTO.toString())
+            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+                vm.getChatMessages().collectLatest { pagingData ->
+                    chatAdapter.submitData(pagingData)
+                }
+            }
         }
 
 
@@ -79,7 +81,6 @@ class ChatFragment : Fragment() {
             val message = binding.messageTextET.text?.toString()
             if(message != null)
             mStompClient.send("/app/1/messages", message).subscribe()
-
         }
     }
 }

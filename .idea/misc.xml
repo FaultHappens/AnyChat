@@ -16,7 +16,8 @@
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.34629629629629627" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/left_chat_item_card_view.xml" value="0.5" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/left_chat_item_card_view.xml" value="0.28703703703703703" />
+        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/right_chat_item_card_view.xml" value="0.14351851851851852" />
       </map>
     </option>
   </component>
