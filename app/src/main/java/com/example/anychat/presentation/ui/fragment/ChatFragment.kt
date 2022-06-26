@@ -84,11 +84,15 @@ class ChatFragment : Fragment() {
                 vm.getChatMessages().collectLatest { pagingData ->
                     chatAdapter.submitData(pagingData)
                 }
-
                 activity?.runOnUiThread { binding.messagesRV.scrollToPosition(10) }
-
             }
+            vm.scrollDown()
+        }
 
+        vm.scrollDownLiveData.observe(viewLifecycleOwner){
+            Handler().postDelayed({
+                binding.messagesRV.scrollToPosition(0)
+          }, 300)
         }
 
 
@@ -98,9 +102,7 @@ class ChatFragment : Fragment() {
                 mStompClient.send("/app/1/messages", message).subscribe()
                 binding.messageTextET.text.clear()
             }
-            Handler().postDelayed({
-                binding.messagesRV.scrollToPosition(0)
-            }, 300)
+
         }
     }
 }
