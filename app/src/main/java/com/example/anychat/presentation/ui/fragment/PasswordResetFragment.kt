@@ -43,7 +43,7 @@ class PasswordResetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.getSharedPreferences("password-reset-timer", Context.MODE_PRIVATE)?.getLong(
+        context?.getSharedPreferences("password-reset", Context.MODE_PRIVATE)?.getLong(
             "timer",
             0
         )?.let {
@@ -95,8 +95,11 @@ class PasswordResetFragment : Fragment() {
             if(it){
                 binding.emailET.error = null
                 inputsValidMap[binding.emailET] = true
-
                 vm.sendPasswordResetCode(binding.emailET.text.toString())
+
+                context?.getSharedPreferences("password-reset", Context.MODE_PRIVATE)
+                    ?.edit()?.putString("email", binding.emailET.text.toString())?.apply()
+
                 addTimer(passwordResetWaitTime)
             }
             else{
@@ -129,14 +132,21 @@ class PasswordResetFragment : Fragment() {
         binding.passwordRepeatET.isEnabled = true
         binding.passwordResetBtn.isEnabled = true
         binding.passwordResetCodeBtn.isEnabled =  false
+        binding.emailET.isEnabled = false
         binding.passwordResetTimer.visibility = View.VISIBLE
+        val email = context?.getSharedPreferences("password-reset", Context.MODE_PRIVATE)
+            ?.getString("email", null)
+        if(email != null){
+            binding.emailET.setText(email)
+        }
+
         object : CountDownTimer(time, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = millisUntilFinished / 1000 % 60
                 val minutes = millisUntilFinished / 1000 / 60 % 60
                 val secondsStr = if(seconds < 10) "0$seconds" else seconds.toString()
                 val minutesStr = if(minutes < 10) "0$minutes" else minutes.toString()
-                context?.getSharedPreferences("password-reset-timer", Context.MODE_PRIVATE)?.edit()?.putLong(
+                context?.getSharedPreferences("password-reset", Context.MODE_PRIVATE)?.edit()?.putLong(
                     "timer",
                     millisUntilFinished + Date().time
                 )?.apply()
@@ -145,9 +155,10 @@ class PasswordResetFragment : Fragment() {
             }
 
             override fun onFinish() {
-                context?.getSharedPreferences("password-reset-timer", Context.MODE_PRIVATE)?.edit()?.remove("timer")?.apply()
+                context?.getSharedPreferences("password-reset", Context.MODE_PRIVATE)?.edit()?.clear()?.apply()
                 binding.passwordResetCodeBtn.isEnabled = true
                 binding.passwordResetTimer.visibility = View.GONE
+                binding.emailET.isEnabled = true
             }
         }.start()
     }
