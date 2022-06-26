@@ -1,5 +1,6 @@
 package com.example.anychat.domain.repository
 
+import com.example.anychat.domain.model.dto.MessageDTO
 import com.example.anychat.domain.model.dto.TokenDTO
 import com.example.anychat.domain.model.dto.UserDTO
 import com.example.anychat.domain.model.param.LoginParam
@@ -10,6 +11,8 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface UserRepository {
+
+
 
     suspend fun userRegistration(registrationParam: RegistrationParam): Response<TokenDTO>
 

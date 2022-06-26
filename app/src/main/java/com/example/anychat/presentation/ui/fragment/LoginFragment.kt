@@ -44,6 +44,8 @@ class LoginFragment : Fragment() {
 
 
         vm.tokenDTOLiveData.observe(viewLifecycleOwner) {
+
+            Log.d("TOKEN", it.access_token)
             val prefference = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()
 
             prefference?.putString(

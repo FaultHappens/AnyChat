@@ -1,6 +1,7 @@
 package com.example.anychat.data.apiservice.user
 
 
+import com.example.anychat.domain.model.dto.MessageDTO
 import com.example.anychat.domain.model.dto.TokenDTO
 import com.example.anychat.domain.model.dto.UserDTO
 import com.example.anychat.domain.model.param.LoginParam
@@ -8,7 +9,9 @@ import com.example.anychat.domain.model.param.RegistrationParam
 import retrofit2.Response
 import retrofit2.http.*
 
-interface UserApiService {
+interface ApiService {
+    @GET("/api/chat/1/messages")
+    suspend fun getChatMessages(@Query("page") page: Int): List<MessageDTO>
 
     @Headers( "Content-Type: application/json" )
     @POST("/api/auth/register")

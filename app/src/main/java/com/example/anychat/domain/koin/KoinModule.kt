@@ -2,13 +2,14 @@ package com.example.anychat.domain.koin
 
 
 import android.content.Context
-import com.example.anychat.data.apiservice.user.UserApiService
+import com.example.anychat.data.apiservice.user.ApiService
 import com.example.anychat.data.repository.UserRepositoryImpl
+import com.example.anychat.domain.repository.ChatRepository
 import com.example.anychat.domain.repository.UserRepository
+import com.example.anychat.presentation.vm.ChatFragmentVM
 import com.example.anychat.presentation.vm.LoginFragmentVM
 import com.example.anychat.presentation.vm.ProfileFragmentVM
 import com.example.anychat.presentation.vm.RegistrationFragmentVM
-import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,11 +22,13 @@ val modules = module{
     single { provideOkHttpClient(androidContext()) }
     single { provideRetrofit(get()) }
 
-    single {get<Retrofit>().create(UserApiService::class.java)}
+    single {get<Retrofit>().create(ApiService::class.java)}
     single<UserRepository> { UserRepositoryImpl(get()) }
+    single<ChatRepository> { ChatRepository(get()) }
     viewModel { RegistrationFragmentVM(get()) }
     viewModel { LoginFragmentVM(get())}
     viewModel { ProfileFragmentVM(get()) }
+    viewModel { ChatFragmentVM(get()) }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
