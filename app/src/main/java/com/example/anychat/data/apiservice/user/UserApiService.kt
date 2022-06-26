@@ -23,7 +23,7 @@ interface UserApiService {
 
     @Multipart
     @POST("user/photo")
-    suspend fun uploadPhoto(@Part image: MultipartBody.Part): Response<UserDTO>
+    suspend fun uploadPhoto(@Part image: MultipartBody.Part): Response<Void>
 
     @GET("user/photo/{photoId}")
     suspend fun getPhoto(@Path("photoId") photoId: String): Response<ResponseBody>

@@ -20,7 +20,7 @@ class UserRepositoryImpl(
         userUpdateParam: UserUpdateParam
     ): Response<UserDTO>  = userApiServer.updateUser(username,userUpdateParam)
 
-    override suspend fun uploadPhoto(image: MultipartBody.Part): Response<UserDTO>  = userApiServer.uploadPhoto(image)
+    override suspend fun uploadPhoto(image: MultipartBody.Part): Response<Void> = userApiServer.uploadPhoto(image)
 
     override suspend fun getPhoto(photoId: String): Response<ResponseBody> = userApiServer.getPhoto(photoId)
 

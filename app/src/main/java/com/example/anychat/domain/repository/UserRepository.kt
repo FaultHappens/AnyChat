@@ -16,7 +16,7 @@ interface UserRepository {
 
     suspend fun updateUser(username: String,  userUpdateParam: UserUpdateParam): Response<UserDTO>
 
-    suspend fun uploadPhoto(image: MultipartBody.Part): Response<UserDTO>
+    suspend fun uploadPhoto(image: MultipartBody.Part): Response<Void>
 
     suspend fun getPhoto(photoId: String): Response<ResponseBody>
 }

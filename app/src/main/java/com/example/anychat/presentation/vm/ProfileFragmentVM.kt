@@ -10,10 +10,6 @@ import com.example.anychat.domain.repository.UserRepository
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileFragmentVM(
     private val userRepository: UserRepository
@@ -44,7 +40,8 @@ class ProfileFragmentVM(
 
     fun uploadPhoto(photo: MultipartBody.Part) {
         viewModelScope.launch {
-            userRepository.uploadPhoto(photo)
+            val uploadPhoto = userRepository.uploadPhoto(photo)
+
         }
     }
 
