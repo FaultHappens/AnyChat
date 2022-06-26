@@ -43,20 +43,20 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
 fun provideOkHttpClient(androidContext: Context): OkHttpClient {
     return OkHttpClient().newBuilder().connectTimeout(1, TimeUnit.HOURS).readTimeout(1, TimeUnit.HOURS).writeTimeout(1, TimeUnit.HOURS)
-        .authenticator { _, response ->
+        .addInterceptor { interceptor ->
             val tokenPreference =
                 androidContext.getSharedPreferences("token", Context.MODE_PRIVATE)
             val accessToken = tokenPreference
                 ?.getString("access_token", null)
 
 
-            val responseBuilder = response.request().newBuilder()
+            val responseBuilder = interceptor.request().newBuilder()
             if (accessToken != null) {
 
                 responseBuilder.addHeader("Authorization", "Bearer $accessToken")
             }
 
-            responseBuilder.build()
+            interceptor.proceed(responseBuilder.build())
         }
         .followRedirects(FALSE)
         .followSslRedirects(FALSE)

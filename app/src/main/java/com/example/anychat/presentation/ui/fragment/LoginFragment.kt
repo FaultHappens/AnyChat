@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.profileFragment)
         }
         vm.wrongCredentialLiveData.observe(viewLifecycleOwner){
+            binding.loginButton.isEnabled = true
             binding.usernameET.error = "Wrong username or password"
             binding.passwordET.error = "Wrong username or password"
         }
@@ -79,6 +80,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
+               binding.loginButton.isEnabled = false
                 val loginParam = LoginParam(
                     binding.usernameET.text.toString(),
                     binding.passwordET.text.toString(),

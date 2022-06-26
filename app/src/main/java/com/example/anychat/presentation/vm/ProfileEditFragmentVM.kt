@@ -16,11 +16,17 @@ class ProfileEditFragmentVM(
     val userDTOLiveData: MutableLiveData<UserDTO> by lazy {
         MutableLiveData<UserDTO>()
     }
+    val userUpdateLiveData: MutableLiveData<UserDTO> by lazy {
+        MutableLiveData<UserDTO>()
+    }
+
+
 
 
     fun updateUser(username: String ,userUpdateParam: UserUpdateParam){
         viewModelScope.launch {
-            userRepository.updateUser(username,userUpdateParam)
+            val updateUser = userRepository.updateUser(username, userUpdateParam)
+            userUpdateLiveData.value = updateUser.body()
         }
     }
     fun getUser(username: String){

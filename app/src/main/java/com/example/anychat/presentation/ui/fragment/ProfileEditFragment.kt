@@ -40,23 +40,30 @@ class ProfileEditFragment : Fragment() {
                 ?: return
         vm.getUser(username)
 
+
+
         vm.userDTOLiveData.observe(viewLifecycleOwner) {
             binding.firstnameET.setText(it.firstname)
             binding.lastnameET.setText(it.lastname)
             binding.descriptionET.setText(it.about)
+        }
 
+        vm.userUpdateLiveData.observe(viewLifecycleOwner){
+            findNavController().navigate(R.id.profileFragment)
         }
 
 
 
         binding.saveBtn.setOnClickListener {
+            binding.saveBtn.isEnabled = false
+
             val userUpdateParam = UserUpdateParam(
                 binding.firstnameET.text.toString(),
                 binding.lastnameET.text.toString(),
                 binding.descriptionET.text.toString()
             )
             vm.updateUser(username, userUpdateParam)
-            findNavController().navigate(R.id.profileFragment)
+
         }
     }
 }

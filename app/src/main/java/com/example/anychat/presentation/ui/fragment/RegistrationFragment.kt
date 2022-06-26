@@ -1,6 +1,7 @@
 package com.example.anychat.presentation.ui.fragment
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,12 +59,14 @@ class RegistrationFragment : Fragment() {
 
 
         vm.userExistLiveData.observe(viewLifecycleOwner) {
+            binding.registerBttn.isEnabled = true
             if(it){
                 binding.usernameET.error = "Username already exist"
                 inputsValidMap[binding.usernameET] = false
             }
         }
         vm.emailExistLiveData.observe(viewLifecycleOwner) {
+            binding.registerBttn.isEnabled = true
             if (it) {
                 binding.emailET.error = "Email already exist"
                 inputsValidMap[binding.emailET] = false
@@ -128,14 +131,23 @@ class RegistrationFragment : Fragment() {
                 inputsValidMap[binding.passwordRepeatET] = false
             }
         }
-
-
-
+        binding.agreeCheckBttn.setOnClickListener {
+            binding.mustAgreeTermsTV.visibility = View.INVISIBLE
+        }
 
         binding.registerBttn.setOnClickListener {
+
+            if(!binding.agreeCheckBttn.isChecked){
+                binding.mustAgreeTermsTV.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
+
             if (inputsValidMap.values.all { it }
                 && inputsValidMap.keys.all { it.text.toString().isNotBlank() }
             ) {
+                binding.registerBttn.isEnabled = false
+
                 val registrationParam = RegistrationParam(
                     binding.usernameET.text.toString(),
                     binding.emailET.text.toString(),

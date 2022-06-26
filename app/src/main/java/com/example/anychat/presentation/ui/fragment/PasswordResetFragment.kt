@@ -6,6 +6,8 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.anychat.R
@@ -50,21 +52,73 @@ class PasswordResetFragment : Fragment() {
               addTimer(diff)
             }
         }
+        val inputsValidMap = mutableMapOf<EditText, Boolean>()
 
+
+        binding.passwordET.addTextChangedListener {
+            if (binding.passwordET.text.toString().length < 8) {
+                binding.passwordET.error = "password too short!"
+                inputsValidMap[binding.passwordET] = false
+            }
+            else if (binding.passwordET.text.toString().length > 20) {
+                binding.passwordET.error = "password too long!"
+                inputsValidMap[binding.passwordET] = false
+            }
+            else{
+                binding.passwordRepeatET.error = null
+                inputsValidMap[binding.passwordET] = true
+            }
+
+            if(binding.passwordRepeatET.text.isNotEmpty()) {
+                if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
+                    binding.passwordRepeatET.error = null
+                    inputsValidMap[binding.passwordRepeatET] = true
+                } else {
+                    binding.passwordRepeatET.error = "Passwords do not match!"
+                    inputsValidMap[binding.passwordRepeatET] = false
+                }
+            }
+        }
+
+        binding.passwordRepeatET.addTextChangedListener {
+            if (binding.passwordRepeatET.text.toString() == binding.passwordET.text.toString()) {
+                binding.passwordRepeatET.error = null
+                inputsValidMap[binding.passwordRepeatET] = true
+            } else {
+                binding.passwordRepeatET.error = "Passwords do not match!"
+                inputsValidMap[binding.passwordRepeatET] = false
+            }
+        }
+
+
+        vm.emailExistLiveData.observe(viewLifecycleOwner){
+            if(it){
+                binding.emailET.error = null
+                inputsValidMap[binding.emailET] = true
+
+                vm.sendPasswordResetCode(binding.emailET.text.toString())
+                addTimer(passwordResetWaitTime)
+            }
+            else{
+                binding.emailET.error = "Email not exist!"
+                inputsValidMap[binding.emailET] = false
+            }
+        }
 
         binding.passwordResetCodeBtn.setOnClickListener {
-            vm.sendPasswordResetCode(binding.emailET.text.toString())
-            addTimer(passwordResetWaitTime)
+            vm.emailExist(binding.emailET.text.toString())
         }
         binding.passwordResetBtn.setOnClickListener {
-            vm.sendPasswordReset(
-                ResetPasswordParam(
-                    binding.emailET.text.toString(),
-                    binding.codeET.text.toString(),
-                    binding.passwordET.text.toString()
+            if(inputsValidMap.all { it.value } && inputsValidMap.keys.all { it.text.toString().isNotBlank() }) {
+              vm.sendPasswordReset(
+                    ResetPasswordParam(
+                        binding.emailET.text.toString(),
+                        binding.codeET.text.toString(),
+                        binding.passwordET.text.toString()
+                    )
                 )
-            )
-            findNavController().navigate(R.id.loginFragment)
+                findNavController().navigate(R.id.loginFragment)
+            }
         }
 
     }
