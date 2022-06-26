@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout5"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
@@ -44,9 +43,9 @@
             app:layout_constraintTop_toBottomOf="@+id/userNameTV">
 
             <TextView
-
+                android:maxWidth="270dp"
                 android:id="@+id/messageTextTV"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -56,10 +55,10 @@
         <TextView
             android:id="@+id/messageTimeStampTV"
             android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/userImageIV"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
             tools:text="12:22" />
 

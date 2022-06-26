@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.anychat.R
 import com.example.anychat.data.enums.Enums
 import com.example.anychat.domain.model.dto.MessageDTO
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class ChatPagingAdapter(
-    private val mUserName: String
+    private val mUserName: String,
+    private val localDateTime: LocalDateTime
 ) : PagingDataAdapter<MessageDTO, RecyclerView.ViewHolder>(COMPARATOR) {
 
 
@@ -58,34 +63,51 @@ class ChatPagingAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder.itemViewType != Enums.ViewType.MyMessage.ordinal){
-            initYourMessage(holder as YourMessageViewHolder, position)
-        }else{
-            initMyMessage(holder as MyMessageViewHolder, position)
+        if (holder.itemViewType != Enums.ViewType.MyMessage.ordinal) {
+            initYourMessage(holder as YourMessageViewHolder, position, localDateTime)
+        } else {
+            initMyMessage(holder as MyMessageViewHolder, position, localDateTime)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return if(viewType == Enums.ViewType.MyMessage.ordinal){
-            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.right_chat_item_card_view, parent ,false)
+        return if (viewType == Enums.ViewType.MyMessage.ordinal) {
+            val view: View = LayoutInflater.from(parent.context)
+                .inflate(R.layout.right_chat_item_card_view, parent, false)
             MyMessageViewHolder(view)
-        }else{
-            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.left_chat_item_card_view, parent ,false)
+        } else {
+            val view: View = LayoutInflater.from(parent.context)
+                .inflate(R.layout.left_chat_item_card_view, parent, false)
             YourMessageViewHolder(view)
         }
     }
 
-    private fun initMyMessage(holder: MyMessageViewHolder, pos: Int) {
+    private fun initMyMessage(holder: MyMessageViewHolder, pos: Int, date: LocalDateTime) {
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
+
+        val dateTime = LocalDateTime.parse(message?.createdAt)
+
+        if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
+            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
+        } else {
+            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("HH:mm").format(dateTime)
+        }
     }
 
-    private fun initYourMessage(holder: YourMessageViewHolder, pos: Int) {
+    private fun initYourMessage(holder: YourMessageViewHolder, pos: Int, date: LocalDateTime) {
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
+
+        val dateTime = LocalDateTime.parse(message?.createdAt)
+        if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
+            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
+        } else {
+            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("HH:mm").format(dateTime)
+        }
     }
 
     companion object {
