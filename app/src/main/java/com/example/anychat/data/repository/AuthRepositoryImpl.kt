@@ -1,8 +1,7 @@
 package com.example.anychat.data.repository
 
-import com.example.anychat.data.apiservice.user.AuthApiServer
+import com.example.anychat.data.apiservice.user.AuthApiService
 import com.example.anychat.domain.model.dto.TokenDTO
-import com.example.anychat.domain.model.dto.UserDTO
 import com.example.anychat.domain.model.param.LoginParam
 import com.example.anychat.domain.model.param.RegistrationParam
 import com.example.anychat.domain.model.param.ResetPasswordCodeParam
@@ -11,7 +10,7 @@ import com.example.anychat.domain.repository.AuthRepository
 import retrofit2.Response
 
 class AuthRepositoryImpl(
-    private val authApiServer: AuthApiServer
+    private val authApiServer: AuthApiService
 ): AuthRepository {
     override suspend fun userRegistration(registrationParam: RegistrationParam): Response<TokenDTO> {
          return authApiServer.userRegistration(registrationParam)

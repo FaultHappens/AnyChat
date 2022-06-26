@@ -11,7 +11,7 @@ import com.example.anychat.domain.model.param.ResetPasswordParam
 import retrofit2.Response
 import retrofit2.http.*
 
-interface AuthApiServer {
+interface AuthApiService {
 
     @Headers( "Content-Type: application/json" )
     @POST("auth/register")
