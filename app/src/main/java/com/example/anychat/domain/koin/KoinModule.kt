@@ -41,7 +41,7 @@ val modules = module{
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
-    return Retrofit.Builder().baseUrl("http://192.168.100.34:8080/api/").client(okHttpClient)
+    return Retrofit.Builder().baseUrl("http://192.168.191.58:8080/api/").client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create()).build()
 }
 
