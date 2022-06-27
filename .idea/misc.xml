@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.1296670030272452" />
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_bttn.xml" value="0.1" />
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/drawable/bg_chat_text.xml" value="0.1" />
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -13,18 +14,14 @@
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.33" />
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/left_chat_item_card_view.xml" value="0.12" />
         <entry key="..\:/Users/dito/AndroidStudioProjects/AnyChat/app/src/main/res/layout/right_chat_item_card_view.xml" value="0.22" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/change_image_dialog.xml" value="0.12314814814814815" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_login.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_profile.xml" value="0.34629629629629627" />
         <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/fragment_registration.xml" value="0.34629629629629627" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/left_chat_item_card_view.xml" value="0.33796296296296297" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/layout/right_chat_item_card_view.xml" value="0.33796296296296297" />
-        <entry key="..\:/Users/tskit/AndroidStudioProjects/AnyChat/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_code.xml" value="0.374" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.355" />
         <entry key="app/src/main/res/drawable/rounded_custom_edit_text.xml" value="0.1015" />
-        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.18161094224924013" />
+        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_password_reset.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
@@ -33,7 +30,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

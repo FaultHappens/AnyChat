@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withCreated
@@ -46,7 +47,18 @@ class ChatFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("CheckResult")
+    lateinit var accessToken: String
+
+    val mStompClient by lazy {
+        Stomp.over(
+            Stomp.ConnectionProvider.OKHTTP,
+            "ws://192.168.191.58:8080/websocket",
+            mapOf("Authorization" to "Bearer $accessToken")
+        )
+    }
+
+
+    @SuppressLint("CheckResult", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,50 +72,63 @@ class ChatFragment : Fragment() {
         }
 
 
-        val accessToken = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
+        accessToken = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
             ?.getString("access_token", null) ?: return
 
         Log.d("TOKEN", accessToken)
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+        this.lifecycleScope.launchWhenCreated {
             vm.getChatMessages().collectLatest { pagingData ->
                 chatAdapter.submitData(pagingData)
             }
         }
 
-        val mStompClient = Stomp.over(
-            Stomp.ConnectionProvider.OKHTTP,
-            "ws://192.168.191.58:8080/websocket",
-            mapOf("Authorization" to "Bearer $accessToken")
-        )
-
-
         mStompClient.connect()
+
+        Handler().postDelayed({
+            vm.getOnline()
+        }, 1000)
+
         mStompClient.topic("/topic/1/messages").subscribe {
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            this.lifecycleScope.launch(Dispatchers.IO) {
                 vm.getChatMessages().collectLatest { pagingData ->
                     chatAdapter.submitData(pagingData)
                     vm.scrollDown()
                 }
+            }
+        }
 
+            mStompClient.topic("/topic/1/online").subscribe {
+                this.lifecycleScope.launch(Dispatchers.IO) {
+                    binding.onlineTV.text = "Online: ${it.payload}"
+                }
+            }
+            vm.onlineLiveData.observe(viewLifecycleOwner) {
+                binding.onlineTV.text =  "Online: $it"
             }
 
-        }
-
-        vm.scrollDownLiveData.observe(viewLifecycleOwner){
-            Handler().postDelayed({
-                binding.messagesRV.scrollToPosition(0)
-          }, 900)
-        }
 
 
-        binding.sendBttn.setOnClickListener {
-            val message = binding.messageTextET.text?.toString()
-            if (message != null) {
-                mStompClient.send("/app/1/messages", message).subscribe()
-                binding.messageTextET.text.clear()
+            vm.scrollDownLiveData.observe(viewLifecycleOwner) {
+                Handler().postDelayed({
+                    binding.messagesRV.scrollToPosition(0)
+                }, 900)
             }
 
-        }
+
+            binding.sendBttn.setOnClickListener {
+                val message = binding.messageTextET.text?.toString()
+                if (message != null) {
+                    mStompClient.send("/app/1/messages", message).subscribe()
+                    binding.messageTextET.text.clear()
+                }
+
+            }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mStompClient.disconnect()
+    }
+
 }

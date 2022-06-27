@@ -11,4 +11,6 @@ class ChatRepository(private val api: ChatApiService, private val userApiService
         pagingSourceFactory = { ChatPagingSource(api, userApiService ) },
         config = PagingConfig(pageSize = 10)
     ).flow
+
+   suspend fun getOnline() = api.getOnline()
 }
