@@ -94,7 +94,8 @@ class ChatPagingAdapter(
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
-        holder.userImageIV.setImageBitmap(message?.profileBitmap)
+        if(message?.profileBitmap != null)
+        holder.userImageIV.setImageBitmap(message.profileBitmap)
 
         val dateTime: LocalDateTime = convertToLocalZoneTime(message)
 
@@ -120,7 +121,8 @@ class ChatPagingAdapter(
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
-        holder.userImageIV.setImageBitmap(message?.profileBitmap)
+        if(message?.profileBitmap != null)
+        holder.userImageIV.setImageBitmap(message.profileBitmap)
 
         val dateTime: LocalDateTime = convertToLocalZoneTime(message)
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
