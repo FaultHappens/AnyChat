@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.anychat.R
 import com.example.anychat.data.enums.Enums
 import com.example.anychat.domain.model.dto.MessageDTO
-import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -88,7 +88,13 @@ class ChatPagingAdapter(
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
 
-        val dateTime = LocalDateTime.parse(message?.createdAt)
+        val oldDateTime = LocalDateTime.parse(message?.createdAt)
+        val oldZone = ZoneId.of("UTC")
+
+        val newZone = TimeZone.getDefault().toZoneId()
+        val dateTime: LocalDateTime = oldDateTime.atZone(oldZone)
+            .withZoneSameInstant(newZone)
+            .toLocalDateTime()
 
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
             holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
