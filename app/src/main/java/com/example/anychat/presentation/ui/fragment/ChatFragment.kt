@@ -82,11 +82,12 @@ class ChatFragment : Fragment() {
         mStompClient.topic("/topic/1/messages").subscribe {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 vm.getChatMessages().collectLatest { pagingData ->
+                    vm.scrollDown()
                     chatAdapter.submitData(pagingData)
                 }
-                activity?.runOnUiThread { binding.messagesRV.scrollToPosition(10) }
+
             }
-            vm.scrollDown()
+
         }
 
         vm.scrollDownLiveData.observe(viewLifecycleOwner){
