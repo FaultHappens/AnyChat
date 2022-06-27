@@ -19,24 +19,13 @@ class ChatFragmentVM(
         MutableLiveData<Int>()
     }
 
-    val scrollDownLiveData: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-
     fun getChatMessages(): Flow<PagingData<MessageDTO>> {
         return repository.getChatMessages().cachedIn(viewModelScope)
-    }
-
-    fun scrollDown(){
-        viewModelScope.launch {
-            scrollDownLiveData.value = true
-        }
     }
 
     fun getOnline() {
         viewModelScope.launch {
             val online = repository.getOnline()
-
             onlineLiveData.value =  online
         }
     }

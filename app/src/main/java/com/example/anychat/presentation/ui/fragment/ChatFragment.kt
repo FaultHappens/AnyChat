@@ -8,27 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.withCreated
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anychat.databinding.FragmentChatBinding
-import com.example.anychat.domain.model.dto.MessageDTO
 import com.example.anychat.presentation.ui.adapter.ChatPagingAdapter
 import com.example.anychat.presentation.vm.ChatFragmentVM
-import com.example.anychat.presentation.vm.LoginFragmentVM
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ua.naiksoftware.stomp.Stomp
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
 
 
 class ChatFragment : Fragment() {
@@ -63,7 +55,8 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         chatAdapter = context?.getSharedPreferences("token", Context.MODE_PRIVATE)
-            ?.getString("username", "error")?.let { ChatPagingAdapter(it, LocalDateTime.now()) }!!
+            ?.getString("username", "error")
+            ?.let { ChatPagingAdapter(it, LocalDateTime.now()) }!!
 
         binding.messagesRV.apply {
             layoutManager =
@@ -93,39 +86,40 @@ class ChatFragment : Fragment() {
             this.lifecycleScope.launch(Dispatchers.IO) {
                 vm.getChatMessages().collectLatest { pagingData ->
                     chatAdapter.submitData(pagingData)
-                    vm.scrollDown()
+                    withContext(Dispatchers.Main) {
+                        scrollCallBack()
+                    }
                 }
             }
         }
 
-            mStompClient.topic("/topic/1/online").subscribe {
-               requireActivity().runOnUiThread {
-                   binding.onlineTV.text = "Online: ${it.payload}"
-               }
-
-            }
-            vm.onlineLiveData.observe(viewLifecycleOwner) {
-                binding.onlineTV.text =  "Online: $it"
+        mStompClient.topic("/topic/1/online").subscribe {
+            requireActivity().runOnUiThread {
+                binding.onlineTV.text = "Online: ${it.payload}"
             }
 
+        }
+        vm.onlineLiveData.observe(viewLifecycleOwner) {
+            binding.onlineTV.text = "Online: $it"
+        }
 
 
-            vm.scrollDownLiveData.observe(viewLifecycleOwner) {
-                Handler().postDelayed({
-                    binding.messagesRV.scrollToPosition(0)
-                }, 900)
+        binding.sendBttn.setOnClickListener {
+            val message = binding.messageTextET.text?.toString()
+            if (message != null) {
+                mStompClient.send("/app/1/messages", message).subscribe()
+                binding.messageTextET.text.clear()
             }
 
-
-            binding.sendBttn.setOnClickListener {
-                val message = binding.messageTextET.text?.toString()
-                if (message != null) {
-                    mStompClient.send("/app/1/messages", message).subscribe()
-                    binding.messageTextET.text.clear()
-                }
-
-            }
+        }
     }
+
+    fun scrollCallBack() {
+        Handler().postDelayed({
+            binding.messagesRV.scrollToPosition(0)
+        }, 500)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
