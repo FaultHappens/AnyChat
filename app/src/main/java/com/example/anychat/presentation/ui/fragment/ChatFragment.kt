@@ -80,20 +80,19 @@ class ChatFragment : Fragment() {
 
         mStompClient.connect()
         mStompClient.topic("/topic/1/messages").subscribe {
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                vm.getChatMessages().collectLatest { pagingData ->
-                    vm.scrollDown()
-                    chatAdapter.submitData(pagingData)
+                this.lifecycleScope.launch(Dispatchers.IO) {
+                    vm.getChatMessages().collectLatest { pagingData ->
+                        vm.scrollDown()
+                        chatAdapter.submitData(pagingData)
+                    }
                 }
-
-            }
 
         }
 
         vm.scrollDownLiveData.observe(viewLifecycleOwner){
             Handler().postDelayed({
                 binding.messagesRV.scrollToPosition(0)
-          }, 300)
+          }, 900)
         }
 
 
