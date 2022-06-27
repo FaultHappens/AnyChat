@@ -1,5 +1,6 @@
 package com.example.anychat.presentation.ui.fragment
 
+import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -10,12 +11,10 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.anychat.R
@@ -27,8 +26,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.*
-import java.net.URL
-import java.net.URLConnection
 import java.util.*
 
 
@@ -140,36 +137,44 @@ class ProfileFragment : Fragment() {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-                var data = data?.data
-                binding.userImageIV.setImageURI(data)
-
+                val imageUri = data?.data
+                if(imageUri != null) {
+                    val imageStream = context?.contentResolver?.openInputStream(imageUri);
+                    val  selectedImage = BitmapFactory.decodeStream(imageStream)
+                    binding.userImageIV.setImageBitmap(selectedImage)
+                    uploadPhoto(selectedImage)
+                }
             }else if(requestCode == REQUEST_IMAGE_CAPTURE){
                 val imageBitmap = data?.extras?.get("data") as Bitmap
                 binding.userImageIV.setImageBitmap(imageBitmap)
 
-                //create a file to write bitmap data
-                val f =  File(context?.cacheDir, UUID.randomUUID().toString());
-                f.createNewFile();
-
-
-                val bitmap = imageBitmap
-                val bos =  ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                val bitmapdata = bos.toByteArray()
-
-
-                val fos = FileOutputStream(f)
-                fos.use {
-                    fos.write(bitmapdata);
-                    fos.flush()
-                    fos.close()
-                }
-
-                val reqFile = RequestBody.create(MediaType.parse("image/jpg"), f)
-                val body = MultipartBody.Part.createFormData("file", f.name, reqFile)
-                vm.uploadPhoto(body)
+                uploadPhoto(imageBitmap)
 
             }
         }
+    }
+
+    private fun uploadPhoto(imageBitmap: Bitmap) {
+        //create a file to write bitmap data
+        val f = File(context?.cacheDir, UUID.randomUUID().toString());
+        f.createNewFile();
+
+
+        val bitmap = imageBitmap
+        val bos = ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        val bitmapdata = bos.toByteArray()
+
+
+        val fos = FileOutputStream(f)
+        fos.use {
+            fos.write(bitmapdata);
+            fos.flush()
+            fos.close()
+        }
+
+        val reqFile = RequestBody.create(MediaType.parse("image/jpg"), f)
+        val body = MultipartBody.Part.createFormData("file", f.name, reqFile)
+        vm.uploadPhoto(body)
     }
 }
