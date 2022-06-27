@@ -99,10 +99,10 @@ class ChatFragment : Fragment() {
         }
 
             mStompClient.topic("/topic/1/online").subscribe {
+               requireActivity().runOnUiThread {
+                   binding.onlineTV.text = "Online: ${it.payload}"
+               }
 
-                this.lifecycleScope.launch(Dispatchers.IO) {
-                    binding.onlineTV.text = "Online: ${it.payload}"
-                }
             }
             vm.onlineLiveData.observe(viewLifecycleOwner) {
                 binding.onlineTV.text =  "Online: $it"
