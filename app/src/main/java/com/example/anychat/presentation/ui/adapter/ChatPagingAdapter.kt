@@ -94,13 +94,17 @@ class ChatPagingAdapter(
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
-        if(message?.profileBitmap != null)
-        holder.userImageIV.setImageBitmap(message.profileBitmap)
+        if (message?.profileBitmap == null) {
+            holder.userImageIV.setImageResource(R.drawable.ic_user)
+        } else {
+            holder.userImageIV.setImageBitmap(message.profileBitmap)
+        }
 
         val dateTime: LocalDateTime = convertToLocalZoneTime(message)
 
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
-            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
+            holder.messageTimeStampTV.text =
+                DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
         } else {
             holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("HH:mm").format(dateTime)
         }
@@ -121,12 +125,16 @@ class ChatPagingAdapter(
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
-        if(message?.profileBitmap != null)
-        holder.userImageIV.setImageBitmap(message.profileBitmap)
+        if (message?.profileBitmap == null) {
+            holder.userImageIV.setImageResource(R.drawable.ic_user)
+        } else {
+            holder.userImageIV.setImageBitmap(message.profileBitmap)
+        }
 
         val dateTime: LocalDateTime = convertToLocalZoneTime(message)
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
-            holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
+            holder.messageTimeStampTV.text =
+                DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
         } else {
             holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("HH:mm").format(dateTime)
         }
