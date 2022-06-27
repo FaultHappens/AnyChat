@@ -129,7 +129,7 @@ class ChatFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-     //   mStompClient.disconnect()
+        mStompClient.disconnect()
     }
 
 }
