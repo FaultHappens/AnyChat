@@ -86,17 +86,15 @@ class ProfileFragment : Fragment() {
               profileUsernameFromChat
         }
         else{
+            binding.userImageIV.setOnClickListener {
+                showImageDialog()
+            }
             context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.getString("username", null)
-
-
         }
 
-
-
-
-          vm.userPhotoLiveData.observe(viewLifecycleOwner){
-              binding.userImageIV.setImageBitmap(it)
-            }
+      vm.userPhotoLiveData.observe(viewLifecycleOwner){
+          binding.userImageIV.setImageBitmap(it)
+        }
 
         binding.editBttn.setOnClickListener {
             findNavController().navigate(R.id.profileEditFragment)
@@ -109,9 +107,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.loginFragment)
         }
 
-        binding.userImageIV.setOnClickListener {
-            showImageDialog()
-        }
+
 
         if(username == null)
             findNavController().navigate(R.id.loginFragment)

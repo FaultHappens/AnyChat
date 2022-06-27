@@ -30,7 +30,7 @@ val modules = module{
     single<UserRepository> { UserRepositoryImpl(get()) }
 
     single {get<Retrofit>().create(ChatApiService::class.java)}
-    single { ChatRepository(get()) }
+    single { ChatRepository(get(), get()) }
     viewModel { RegistrationFragmentVM(get()) }
     viewModel { LoginFragmentVM(get())}
     viewModel { ProfileFragmentVM(get()) }
