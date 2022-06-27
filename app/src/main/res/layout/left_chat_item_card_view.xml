@@ -19,14 +19,23 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nandemonaya" />
 
-        <ImageView
-            android:id="@+id/userImageIV"
-            android:layout_marginTop="-20dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            app:cardCornerRadius="25dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_user"
+            android:layout_marginTop="-20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/userImageIV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_user" />
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/linearLayout5"
