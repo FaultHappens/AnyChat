@@ -99,6 +99,7 @@ class ChatFragment : Fragment() {
         }
 
             mStompClient.topic("/topic/1/online").subscribe {
+
                 this.lifecycleScope.launch(Dispatchers.IO) {
                     binding.onlineTV.text = "Online: ${it.payload}"
                 }
@@ -128,7 +129,7 @@ class ChatFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mStompClient.disconnect()
+     //   mStompClient.disconnect()
     }
 
 }
