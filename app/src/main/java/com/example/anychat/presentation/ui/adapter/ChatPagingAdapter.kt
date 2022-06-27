@@ -95,13 +95,7 @@ class ChatPagingAdapter(
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
 
-        val oldDateTime = LocalDateTime.parse(message?.createdAt)
-        val oldZone = ZoneId.of("UTC")
-
-        val newZone = TimeZone.getDefault().toZoneId()
-        val dateTime: LocalDateTime = oldDateTime.atZone(oldZone)
-            .withZoneSameInstant(newZone)
-            .toLocalDateTime()
+        val dateTime: LocalDateTime = convertToLocalZoneTime(message)
 
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
             holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
@@ -110,12 +104,23 @@ class ChatPagingAdapter(
         }
     }
 
+    private fun convertToLocalZoneTime(message: MessageDTO?): LocalDateTime {
+        val oldDateTime = LocalDateTime.parse(message?.createdAt)
+        val oldZone = ZoneId.of("UTC")
+
+        val newZone = TimeZone.getDefault().toZoneId()
+        val dateTime: LocalDateTime = oldDateTime.atZone(oldZone)
+            .withZoneSameInstant(newZone)
+            .toLocalDateTime()
+        return dateTime
+    }
+
     private fun initYourMessage(holder: YourMessageViewHolder, pos: Int, date: LocalDateTime) {
         val message: MessageDTO? = getItem(pos)
         holder.messageTextTV.text = message?.text
         holder.userNameTV.text = message?.username
 
-        val dateTime = LocalDateTime.parse(message?.createdAt)
+        val dateTime: LocalDateTime = convertToLocalZoneTime(message)
         if (dateTime.dayOfYear < date.dayOfYear || dateTime.year < date.year) {
             holder.messageTimeStampTV.text = DateTimeFormatter.ofPattern("MM-dd HH:mm").format(dateTime)
         } else {
