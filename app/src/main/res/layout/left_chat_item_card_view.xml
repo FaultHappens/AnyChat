@@ -67,7 +67,7 @@
             android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@+id/userImageIV"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
             tools:text="12:22" />
 
