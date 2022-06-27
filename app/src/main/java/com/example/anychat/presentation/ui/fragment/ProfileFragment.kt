@@ -1,6 +1,5 @@
 package com.example.anychat.presentation.ui.fragment
 
-import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -8,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
@@ -25,7 +23,9 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 
@@ -50,6 +50,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         vm.userDTOLiveData.observe(viewLifecycleOwner) {
             binding.nameET.text = it.username
             val strBuilder = StringBuilder()
@@ -74,7 +77,21 @@ class ProfileFragment : Fragment() {
             binding.descriptionET.text = it.about ?: "No Description"
 
         }
-        val username = context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.getString("username", null)
+        val profileUsernameFromChat = arguments?.getString("profileUsername")
+        val username = if(profileUsernameFromChat != null){
+               binding.editBttn.visibility =  View.INVISIBLE
+               binding.linearLayout4.visibility = View.INVISIBLE
+              binding.linearLayout3.visibility = View.INVISIBLE
+
+              profileUsernameFromChat
+        }
+        else{
+            context?.getSharedPreferences("token", Context.MODE_PRIVATE)?.getString("username", null)
+
+
+        }
+
+
 
 
           vm.userPhotoLiveData.observe(viewLifecycleOwner){

@@ -47,6 +47,12 @@
         android:name="com.example.anychat.presentation.ui.fragment.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/chatFragment_to_profileFragment_"
+            app:destination="@id/profileFragment">
+            <argument android:name="profileUsername"
+                app:argType="string"/>
+        </action>
 
     </fragment>
     <fragment

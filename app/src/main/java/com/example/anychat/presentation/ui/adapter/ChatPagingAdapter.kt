@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +37,10 @@ class ChatPagingAdapter(
             messageTextTV = itemView.findViewById(R.id.messageTextTV)
             userImageIV = itemView.findViewById(R.id.userImageIV)
             messageTimeStampTV = itemView.findViewById(R.id.messageTimeStampTV)
+            userImageIV.setOnClickListener {
+                val bundle = bundleOf("profileUsername" to userNameTV.text)
+                itemView.findNavController().navigate(R.id.profileFragment, bundle)
+            }
         }
     }
 
@@ -50,6 +56,7 @@ class ChatPagingAdapter(
             messageTextTV = itemView.findViewById(R.id.messageTextTV)
             userImageIV = itemView.findViewById(R.id.userImageIV)
             messageTimeStampTV = itemView.findViewById(R.id.messageTimeStampTV)
+
         }
     }
 
