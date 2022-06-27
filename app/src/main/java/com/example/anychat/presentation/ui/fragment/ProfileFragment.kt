@@ -1,6 +1,7 @@
 package com.example.anychat.presentation.ui.fragment
 
 import android.app.Activity.RESULT_OK
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -10,12 +11,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.anychat.R
+import com.example.anychat.databinding.ChangeImageDialogBinding
 import com.example.anychat.databinding.FragmentProfileBinding
 import com.example.anychat.presentation.vm.ProfileFragmentVM
 import okhttp3.MediaType
@@ -29,6 +33,9 @@ import java.util.*
 
 
 class ProfileFragment : Fragment() {
+
+    private var SELECT_PICTURE = 1
+    private val REQUEST_IMAGE_CAPTURE = 2
 
 
     lateinit var binding: FragmentProfileBinding
@@ -88,10 +95,8 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.loginFragment)
         }
 
-
-
         binding.userImageIV.setOnClickListener {
-          dispatchTakePictureIntent()
+            showImageDialog()
         }
 
         if(username == null)
@@ -100,47 +105,71 @@ class ProfileFragment : Fragment() {
            vm.getUser(username)
 
     }
-    val REQUEST_IMAGE_CAPTURE = 1
 
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            e.printStackTrace()
+    private fun showImageDialog() {
+
+        val dialogBinding: ChangeImageDialogBinding = ChangeImageDialogBinding.inflate(LayoutInflater.from(requireContext()))
+
+
+        val dialog = Dialog(requireContext())
+
+        dialogBinding.chooseImageBttn.setOnClickListener {
+            val i = Intent()
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
+            dialog.cancel()
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.userImageIV.setImageBitmap(imageBitmap)
-
-            //create a file to write bitmap data
-            val f =  File(context?.cacheDir, UUID.randomUUID().toString());
-            f.createNewFile();
-
-
-            val bitmap = imageBitmap
-            val bos =  ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            val bitmapdata = bos.toByteArray()
-
-
-            val fos = FileOutputStream(f)
-            fos.use {
-                fos.write(bitmapdata);
-                fos.flush()
-                fos.close()
+        dialogBinding.takePhotoBttn.setOnClickListener {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            try {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
             }
-
-
-
-            val reqFile = RequestBody.create(MediaType.parse("image/jpg"), f)
-            val body = MultipartBody.Part.createFormData("file", f.name, reqFile)
-            vm.uploadPhoto(body)
+            dialog.cancel()
         }
+
+        dialog.setContentView(dialogBinding.root)
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                var data = data?.data
+                binding.userImageIV.setImageURI(data)
+
+            }else if(requestCode == REQUEST_IMAGE_CAPTURE){
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                binding.userImageIV.setImageBitmap(imageBitmap)
+
+                //create a file to write bitmap data
+                val f =  File(context?.cacheDir, UUID.randomUUID().toString());
+                f.createNewFile();
+
+
+                val bitmap = imageBitmap
+                val bos =  ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                val bitmapdata = bos.toByteArray()
+
+
+                val fos = FileOutputStream(f)
+                fos.use {
+                    fos.write(bitmapdata);
+                    fos.flush()
+                    fos.close()
+                }
+
+                val reqFile = RequestBody.create(MediaType.parse("image/jpg"), f)
+                val body = MultipartBody.Part.createFormData("file", f.name, reqFile)
+                vm.uploadPhoto(body)
+
+            }
+        }
+    }
 }

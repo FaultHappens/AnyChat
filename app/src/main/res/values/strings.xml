@@ -31,4 +31,6 @@
     <string name="allowed_email">ABCDEFGHIJKLMNOPQRSTUVWXYZ@.-abcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="allowed_password">ABCDEFGHIJKLMNOPQRSTUVWXYZ@.-#$%abcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="must_agree_terms">You must agree terms!</string>
+    <string name="pick_from_gallery">Pick from gallery</string>
+    <string name="take_a_picture">Take a picture</string>
 </resources>

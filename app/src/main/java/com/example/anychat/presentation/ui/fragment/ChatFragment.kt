@@ -84,7 +84,6 @@ class ChatFragment : Fragment() {
                 vm.getChatMessages().collectLatest { pagingData ->
                     chatAdapter.submitData(pagingData)
                 }
-                activity?.runOnUiThread { binding.messagesRV.scrollToPosition(10) }
             }
             vm.scrollDown()
         }
