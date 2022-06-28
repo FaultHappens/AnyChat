@@ -100,7 +100,6 @@
 
     <TextView
         android:id="@+id/mustAgreeTermsTV"
-        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -109,6 +108,7 @@
         android:text="@string/must_agree_terms"
         android:textColor="@color/red"
         android:textSize="14sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +123,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mustAgreeTermsTV"
         app:layout_constraintStart_toStartOf="parent">
 
         <CheckBox
